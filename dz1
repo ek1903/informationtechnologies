@@ -1,18 +1,16 @@
 #include <iostream>
 using namespace std;
-int main () {
-    int a, b, c;
-    cin >> a >> b; 
-    if (a=b) {
-        c=a
+int main() {
+  int m, n, a;
+    cin >> m >> n;
+    a = m * n;
+    while (m != n) {
+        if (m > n) {
+            m = m - n;
+        } else {
+            n = n - m;
         }
-    else {
-        while ((a!=0) && (b!=0)) {
-            if (a>b) {
-                a=a * b;
-                else if (b>a) {
-                    b=b % a;
-                    c=a + b;
-            }
-            cout << (a * b) / c;
     }
+    cout << a / m;
+    return 0;
+}

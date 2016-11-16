@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 using namespace std;
 int proper_fraction(int n) {
 	int k = 0;

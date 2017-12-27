@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+int** C;
+int** R;
+int** D1;
+int* A;
+int* B;
+int* D;
+int n, m, k;
+
+void min_rast(int v){
+  for(int i = 0; i < m; i++)
+    if(C[v][i]){
+      if(v == k)
+        R[k][i] = D1[v][i];
+      if(R[k][i] > D1[v][i] + R[k][v])
+        R[k][i] = D1[v][i] + R[k][v];
+    }
+}
+
+void matrix_smew(){
+  C = new int*[m];	
+  R = new int*[m];
+  D1 = new int*[m];
+  for(int i = 0; i < m; i++){
+    C[i] = new int[m];    
+    R[i] = new int[m];
+    D1[i] = new int[m];
+  }
+  for(int l = 0; l < m; l++)
+    for(int i = 0; i < n; i++){
+    	D1[A[i]][B[i]] = D[i];
+    	R[l][i] = -1;
+      if(A[i] == l)
+        C[l][B[i]] = 1;
+    }
+}
+
+int  main(){
+  cin >> n >> m >> k;
+  A = new int[n];
+  B = new int[n];
+  D = new int[n];
+  for(int i = 0; i < n; i++)
+    cin >> A[i] >> B[i] >> D[i];
+  matrix_smew();
+  for(int i = 0; i < m; i++)
+    min_rast(i);
+  for(int i = 0; i < m; i++){
+    for(int l = 0; l < m; l++)
+      cout << R[i][l] << " ";
+    cout << endl;
+  }
+  return 0;
+}

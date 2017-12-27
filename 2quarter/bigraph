@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+int** C;
+int* A;
+int* B;
+int n, m, flag = 0;
+int* col;
+int* used;
+void dfs(int k, int c){
+  if(used[k] == 1){
+    if(c == col[k])
+      flag = 1;
+    return;
+  }
+  used[k] = 1;
+  col[k] = (c + 1) % 2;
+  for(int i = 0; i < m; i++)
+    if(C[k][i] == 1)
+      dfs(i, col[k]);
+}
+
+void matrix_smew(){
+  C = new int*[m];	
+  for(int i = 0; i < m; i++)	 
+    C[i] = new int[m];    
+  for(int l = 0; l < m; l++)
+    for(int i = 0; i < n; i++){
+      if(A[i] == l)
+        C[l][B[i]] = 1;
+      if(B[i] == l)
+        C[l][A[i]] = 1;
+    }
+}
+
+int main(){
+  cin >> n >> m;
+  A = new int[n];
+  B = new int[n];
+  col = new int[m];
+  used = new int[m];
+  for(int i = 0; i < n; i++)
+    cin >> A[i] >> B[i]; 
+  matrix_smew();
+  dfs(0, 0);
+  if(flag == 0)
+    for(int i = 0; i < m; i++)
+      cout << col[i] << " ";
+  else cout << "Not a bigraph";
+  return 0;
+}

@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int* used;
+int m;
+int bfs(){
+  while(Q.empty){
+    int t = Q.pop();
+    for(int i = 0; i < m; i++)
+      if(used[i] == 0){
+        used[i] = 3 - used[t];
+        Q.push(i);
+      }
+      else if(used[i] == used[t])
+        return;
+  }
+}
+
+int main(){
+	cin >> m;
+	used = new int[m];
+	for(int i = 0; i < m; i++)
+	if(used[j] == 0)
+	  Q.pop(j);
+	return 0;
+}

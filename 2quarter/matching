@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+
+int** C;
+int* A;
+int* B;
+int* used;
+int* M;
+int n, m;
+
+void uvel_cep(int v){
+  if(used[v])
+    return;
+  int max = 0, k = 0;
+  used[v] = 1;
+  for(int i = 0; i < m; i++)
+    if(C[v][i]){
+      k++;
+      uvel_cep(i);
+      if(max < M[i])
+        max = M[i];
+    }
+  if(k == 0)
+    M[v] = 0;
+  else M[v] = max + 1;
+}
+
+void matrix_smew(){
+  C = new int*[m];
+  for(int i = 0; i < m; i++)
+    C[i] = new int[m];    
+  for(int l = 0; l < m; l++)
+    for(int i = 0; i < n; i++)
+      if(A[i] == l)
+        C[l][B[i]] = 1;
+}
+
+int main(){
+  int max = -1, k, k1;
+  cin >> n >> m;
+  A = new int[n];
+  B = new int[n];
+  M = new int[m];
+  used = new int[m];
+  for(int i = 0; i < n; i++)
+    cin >> A[i] >> B[i];
+  matrix_smew();
+  for(int i = 0; i < m; i++)
+    uvel_cep(i);
+  for(int i = 0; i < m; i++)
+    if(max < M[i]){
+      max = M[i];
+      k = i;
+    }
+  cout << k << " ";
+  for(int i = 0; i < m; i++){
+    for(int l = 0; l < m; l++)
+      if(M[k] - M[l] == 1 && C[k][l])
+        k1 = l;
+    k = k1;
+    cout << k << " ";
+    if(M[k] == 0)
+      break;
+  }
+  return 0;
+}

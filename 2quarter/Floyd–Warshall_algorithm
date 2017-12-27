@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+
+int** D;
+int** P;
+int* A;
+int* B;
+int* used;
+int* M;
+int n, m;
+void orsh_fl(){
+  for(int k = 0; k < n; k++)
+    for(int x = 0; x < n; x++)
+      for(int y = 0; y < n; y++)
+        if(D[x][y] > D[x][k] + D[k][y]){
+          D[x][y] = D[x][k] + D[k][y]
+          P[x][y] = k;
+        }
+}
+
+int f(int x, int y){
+  if(P[x][y] != -1)
+    return f(x, P[x][y]) + f(P[x][y], y);
+  return x + y;
+}
+
+void matrix_smew(){
+  D = new int*[m];	
+  P = new int*[m];
+  for(int i = 0; i < m; i++){
+    D[i] = new int[m];
+    P[i] = new int[m];
+  }
+  for(int l = 0; l < m; l++)
+    for(int i = 0; i < n; i++){
+      D[l][i] = -1;
+      P[l][i] = -1;
+    }
+  for(int i = 0; i < n; i++)
+    D[A[i]][B[i]] = M[i];
+}
+
+int main(){
+  cin >> n >> m;//n-кол-во ребер, m-вершин
+  A = new int[n];
+  B = new int[n];
+  M = new int[n];
+  for(int i = 0; i < n; i++)
+    cin >> A[i] >> B[i] >> M[i];
+  matrix_smew();
+  return 0;
+}

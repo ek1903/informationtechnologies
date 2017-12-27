@@ -1,0 +1,56 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+int** D;
+int* P;
+int* A;
+int* B;
+int* used;
+int* M;
+int n, m, k;
+void f(int v){
+  if(used[v])
+    return;
+  used[v] = 1;
+  for(int i = 0; i < m; i++)
+    if(D[v][i] != -1)
+      P[i] = min(P[i], P[v] + D[v][i]);
+  for(int i = 0; i < m; i++)
+    if(D[v][i] != -1)
+      f(i);
+}
+void msm(){
+  D = new int*[m];	
+  for(int i = 0; i < m; i++)
+    D[i] = new int[m];
+  for(int l = 0; l < m; l++)
+    for(int i = 0; i < m; i++)
+      D[l][i] = -1;
+  for(int i = 0; i < n; i++){
+    D[A[i]][B[i]] = M[i];
+    D[B[i]][A[i]] = M[i];
+  }
+}
+
+int main(){
+  srand(time(0));
+  cin >> n >> m >> k;
+  //n-кол-во ребер, m-вершин 
+  A = new int[n];
+  B = new int[n];
+  M = new int[n];
+  P = new int[m];
+  for(int i = 0; i < m; i++)
+    P[i] = 10000;
+  P[k] = 0;
+  used = new int[m];
+  for(int i = 0; i < n; i++)
+    cin >> A[i] >> B[i] >> M[i];
+  msm();
+  f(k);
+  for(int i = 0; i < m; i++)
+    cout << P[i] << " ";
+  cout << endl << clock()/1000.0;
+  return 0;
+}
